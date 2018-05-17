@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+        <Property name="base.log.dir">target/logs</Property>
+        <Property name="appenderPatternLayout">[%t] %d{dd MMM yyyy HH:mm:ss,SSSZ}{UTC} UTC %-5p %-15c{1} [%X]: %m%n</Property>
+        <Property name="maxLogFileSize">10 MB</Property>
+        <Property name="maxLogFiles">2</Property>
+    </Properties>
+	<Appenders>
+		<RollingRandomAccessFile name="APPLOGFILE" 
+								 fileName="${base.log.dir}/app.log"
+                                 filePattern="${base.log.dir}/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz" append="true">
+            <PatternLayout pattern="${appenderPatternLayout}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${maxLogFileSize}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${maxLogFiles}"/>
+        </RollingRandomAccessFile>
+	</Appenders>
+	<Loggers>
+		<Root level="info" includeLocation="false">
+			<AppenderRef ref="APPLOGFILE" />
+		</Root>
+	</Loggers>
+</Configuration>
